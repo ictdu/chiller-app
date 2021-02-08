@@ -32,14 +32,12 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: IconButton(
-                icon: Icon(Icons.account_circle_outlined),
-                onPressed: (){
+          IconButton(
+              icon: Icon(Icons.account_circle_outlined,
+              color: Colors.white,),
+              onPressed: (){
 
-                },
-            ),
+              },
           ),
         ],
         centerTitle: true,

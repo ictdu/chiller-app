@@ -157,7 +157,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: Text(
                   'SKIP',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 onPressed: () {},
