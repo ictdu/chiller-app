@@ -159,8 +159,7 @@ class AuthProvider with ChangeNotifier{
   }
 
   //update user data
-  Future<bool> updateUser({String id, String number})async{
-    try{
+  void updateUser({String id, String number})async{
       _userServices.updateUserData({
         'id':id,
         'number':number,
@@ -170,11 +169,5 @@ class AuthProvider with ChangeNotifier{
       });
       this.loading = false;
       notifyListeners();
-      return true;
-    }catch(e){
-      print('Error $e');
-      return false;
     }
-  }
-
 }
