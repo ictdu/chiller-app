@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:chiller_vendor/screens/auth_screen.dart';
+
+import 'package:chiller_vendor/screens/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ),(){
       FirebaseAuth.instance.authStateChanges().listen((User user) {
         if(user==null){
-          Navigator.pushReplacementNamed(context, AuthScreen.id);
+          Navigator.pushReplacementNamed(context, RegisterScreen.id);
         }else{
           Navigator.pushReplacementNamed(context, HomeScreen.id);
         }
