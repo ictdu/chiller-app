@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:chiller_vendor/providers/auth_provider.dart';
+import 'package:chiller_vendor/screens/home_screen.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,12 +18,42 @@ class _RegisterFormState extends State<RegisterForm> {
   var _passwordController = TextEditingController();
   var _confirmPassController = TextEditingController();
   var _addressTextController = TextEditingController();
+  var _nameTextController = TextEditingController();
+  var _dialogTextController = TextEditingController();
+  String email;
+  String password;
+  String mobile;
+  String shopName;
+  bool _isLoading = false;
+
+  FirebaseStorage _storage = FirebaseStorage.instance;
+
+  Future<String>uploadFile(filePath) async {
+    File file = File(filePath);
+
+    try {
+      await _storage.ref('uploads/shopProfilePic/${_nameTextController.text}').putFile(file);
+    } on FirebaseException catch (e) {
+      print (e.code);
+    }
+    //file url path to save in database
+    String downloadURL = await _storage.ref('uploads/shopProfilePic/${_nameTextController.text}').getDownloadURL();
+    return downloadURL;
+  }
 
 
   @override
   Widget build(BuildContext context) {
     final _authData = Provider.of<AuthProvider>(context);
-    return Form(
+    scaffoldMessage(message){
+      return Scaffold
+          .of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    }
+
+    return _isLoading ? CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+    ) : Form(
       key: _formKey,
       child: Column(
         children: [
@@ -30,6 +64,12 @@ class _RegisterFormState extends State<RegisterForm> {
                 if(value.isEmpty){
                   return 'Enter Shop Name';
                 }
+                setState(() {
+                  _nameTextController.text = value;
+                });
+                setState(() {
+                  shopName = value;
+                });
                 return null;
               },
               decoration: InputDecoration(
@@ -50,14 +90,19 @@ class _RegisterFormState extends State<RegisterForm> {
           Padding(
             padding: const EdgeInsets.all(3.0),
             child: TextFormField(
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.phone,
+              maxLength: 10,
               validator: (value){
                 if(value.isEmpty){
                   return 'Enter Mobile Number';
                 }
+                setState(() {
+                  mobile = value;
+                });
                 return null;
               },
               decoration: InputDecoration(
+                prefixText: '+63',
                 prefixIcon: Icon(Icons.phone_android),
                 labelText: 'Mobile Number',
                 contentPadding: EdgeInsets.zero,
@@ -85,6 +130,9 @@ class _RegisterFormState extends State<RegisterForm> {
                 if(!_isValid){
                   return 'Invalid Email Format';
                 }
+                setState(() {
+                  email = value;
+                });
                 return null;
               },
               decoration: InputDecoration(
@@ -111,8 +159,11 @@ class _RegisterFormState extends State<RegisterForm> {
                   return 'Enter Password';
                 }
                 if(value.length<6){
-                  return 'Password must be atleast 6 characters';
+                  return 'Password must be at least 6 characters';
                 }
+                setState(() {
+                  password = value;
+                });
                 return null;
               },
               decoration: InputDecoration(
@@ -138,7 +189,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 if(value.isEmpty){
                   return 'Re-enter Password';
                 }
-                if(_passwordController.text != _confirmPassController){
+                if(_passwordController.text != _confirmPassController.text){
                   return 'Password doesn\'t match';
                 }
                 return null;
@@ -161,7 +212,7 @@ class _RegisterFormState extends State<RegisterForm> {
           Padding(
             padding: const EdgeInsets.all(3.0),
             child: TextFormField(
-              maxLines: 6,
+              maxLines: 5,
               controller: _addressTextController,
               validator: (value){
                 if(value.isEmpty){
@@ -206,30 +257,9 @@ class _RegisterFormState extends State<RegisterForm> {
           Padding(
             padding: const EdgeInsets.all(3.0),
             child: TextFormField(
-              validator: (value){
-                if(value.isEmpty){
-                  return 'Enter Shop Name';
-                }
-                return null;
+              onChanged: (value){
+                _dialogTextController.text = value;
               },
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.add_business),
-                labelText: 'Store Name',
-                contentPadding: EdgeInsets.zero,
-                enabledBorder: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).primaryColor
-                    )
-                ),
-                focusColor: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: TextFormField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.comment),
                 labelText: 'Shop Dialog',
@@ -256,14 +286,39 @@ class _RegisterFormState extends State<RegisterForm> {
                     onPressed: (){
                     if(_authData.isPicAvail == true){ //first it will validate profile picture
                       if(_formKey.currentState.validate()){ //then it will validate form
-                        Scaffold
-                            .of(context)
-                            .showSnackBar(SnackBar(content: Text('Processing Data')));
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        _authData.registerVendor(email, password).then((credential){
+                          if(credential.user.uid != null){
+                            uploadFile(_authData.image.path).then((url) {
+                              if(url != null){
+                                //save vendor details to database
+                                _authData.savedVendorDataToDb(
+                                  url: url,
+                                  mobile: mobile,
+                                  shopName: shopName,
+                                  dialog: _dialogTextController.text,
+                                );
+                                  setState(() {
+                                    _formKey.currentState;
+                                    _isLoading = false;
+                                  });
+                                  Navigator.pushReplacementNamed(context, HomeScreen.id);
+                                //navigate to homescreen after finishing all the process
+                              }else{
+                                scaffoldMessage('Failed to upload shop profile image');
+                              }
+                            });
+
+                          }else{
+                            //registration failed
+                            scaffoldMessage(_authData.error);
+                          }
+                        });
                       }
                     }else{
-                      Scaffold
-                          .of(context)
-                          .showSnackBar(SnackBar(content: Text('Shop profile picture is needed.')));
+                      scaffoldMessage('Shop profile picture is needed.');
                     }
 
                     },
