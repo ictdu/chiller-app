@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:image_picker/image_picker.dart';
@@ -104,6 +103,47 @@ class AuthProvider extends ChangeNotifier {
     return userCredential;
   }
 
+  //login
+  Future<UserCredential> loginVendor(email, password) async {
+    this.email = email;
+    notifyListeners();
+    UserCredential userCredential;
+    try {
+      userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      this.error = e.code;
+      notifyListeners();
+    } catch (e) {
+      this.error = e.code();
+      notifyListeners();
+      print(e);
+    }
+    return userCredential;
+  }
+
+  //reset password
+  Future<void> resetPassword(email) async {
+    this.email = email;
+    notifyListeners();
+    UserCredential userCredential;
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email,
+      );
+    } on FirebaseAuthException catch (e) {
+      this.error = e.code;
+      notifyListeners();
+    } catch (e) {
+      this.error = e.code();
+      notifyListeners();
+      print(e);
+    }
+    return userCredential;
+  }
+
   //save vendor data to Firestore
   Future<void> savedVendorDataToDb({
   String url, String shopName, String mobile, String dialog}){
@@ -122,6 +162,7 @@ class AuthProvider extends ChangeNotifier {
       'totalRating':0, //for future use
       'isTopPicked':true, //for future use
       'imageUrl':url,
+      'accVerified':true, //only the verified vendors can sell their products
     });
     return null;
   }

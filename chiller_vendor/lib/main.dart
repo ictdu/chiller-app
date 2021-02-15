@@ -1,8 +1,10 @@
 
 import 'package:chiller_vendor/providers/auth_provider.dart';
 import 'package:chiller_vendor/screens/home_screen.dart';
+import 'package:chiller_vendor/screens/login_screen.dart';
 import 'package:chiller_vendor/screens/register_screen.dart';
 import 'package:chiller_vendor/screens/splash_screen.dart';
+import 'package:chiller_vendor/widgets/reset_password_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +37,8 @@ class MyApp extends StatelessWidget {
         SplashScreen.id:(context)=>SplashScreen(),
         RegisterScreen.id:(context)=>RegisterScreen(),
         HomeScreen.id:(context)=>HomeScreen(),
+        LoginScreen.id:(context)=>LoginScreen(),
+        ResetPassword.id:(context)=>ResetPassword(),
       },
     );
   }
