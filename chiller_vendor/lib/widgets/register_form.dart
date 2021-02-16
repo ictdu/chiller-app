@@ -276,7 +276,7 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           Row(
             children: [

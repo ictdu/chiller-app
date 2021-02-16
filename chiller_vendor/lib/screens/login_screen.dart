@@ -1,5 +1,6 @@
 import 'package:chiller_vendor/providers/auth_provider.dart';
 import 'package:chiller_vendor/screens/home_screen.dart';
+import 'package:chiller_vendor/screens/register_screen.dart';
 import 'package:chiller_vendor/widgets/reset_password_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -36,19 +37,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Image.asset('images/login.gif',
+                            height: 250,),
                           Text('LOGIN', style:
                             TextStyle(
                               fontFamily: 'Anton',
                               fontSize: 30,
                             ),
                           ),
-                          SizedBox(width: 20,),
-                          Image.asset('images/splashlogo.png',
-                            height: 80,),
                         ],
                       ),
                       SizedBox(height: 20,),
@@ -173,6 +173,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: (){
+                              Navigator.pushReplacementNamed(context, RegisterScreen.id);
+                            },
+                            child: Text('Don\'t have an account? Create a new one.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20,)
                     ],
                   ),
                 ),
