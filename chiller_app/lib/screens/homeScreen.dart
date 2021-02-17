@@ -1,8 +1,7 @@
 import 'package:chiller_app/providers/auth_provider.dart';
-import 'package:chiller_app/screens/welcome_screen.dart';
 import 'package:chiller_app/widgets/image_slider.dart';
 import 'package:chiller_app/widgets/my_appbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chiller_app/widgets/stores.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,28 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             ImageSlider(),
-            RaisedButton(
-              onPressed: (){
-                auth.error='';
-                FirebaseAuth.instance.signOut().then((value){
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context)=>WelcomeScreen(),
-                  ));
-                });
-              },
-              child: Text('Sign Out',
-                style: TextStyle(
-                  color: Colors.black,
-                ),),
-            ),
-            RaisedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, WelcomeScreen.id);
-              },
-              child: Text('Home Screen',
-                style: TextStyle(
-                  color: Colors.black,
-                ),),
+            Container(
+              height: 300,
+              child: Stores(),
             ),
           ],
         ),

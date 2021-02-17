@@ -23,9 +23,11 @@ class _ImageSliderState extends State<ImageSlider> {
   Future getSliderImageFromDb()async{
     var _fireStore = FirebaseFirestore.instance;
     QuerySnapshot snapshot = await _fireStore.collection('slider').get();
-    setState(() {
-      _dataLength = snapshot.docs.length;
-    });
+    if(mounted){
+      setState(() {
+        _dataLength = snapshot.docs.length;
+      });
+    }
     return snapshot.docs;
   }
 
@@ -33,9 +35,10 @@ class _ImageSliderState extends State<ImageSlider> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if(_dataLength!=0)
         FutureBuilder(
         future: getSliderImageFromDb(),
-          builder: (_,snapShot){
+          builder: (_, snapShot){
           return snapShot.data == null ? Center(child: CircularProgressIndicator(),) : Padding(
             padding: const EdgeInsets.all(8.0),
             child: CarouselSlider.builder(
@@ -43,12 +46,13 @@ class _ImageSliderState extends State<ImageSlider> {
                 itemBuilder: (context, int index, _index) {
                   DocumentSnapshot sliderImage = snapShot.data[index];
                   Map getImage = sliderImage.data();
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
                     child: Image.network(getImage['image'], fit: BoxFit.fill,),
                   );
                 },
                 options: CarouselOptions(
+                  viewportFraction: 1,
                   initialPage: 0,
                   autoPlay: true,
                   height: 150,

@@ -44,6 +44,7 @@ class LocationProvider with ChangeNotifier {
     print("${selectedAddress.featureName} : ${selectedAddress.addressLine}");
   }
 
+  //save preference
   Future<void>savePrefs()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setDouble('latitude', this.longitude);
