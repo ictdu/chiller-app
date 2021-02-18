@@ -1,6 +1,7 @@
 import 'package:chiller_app/providers/auth_provider.dart';
 import 'package:chiller_app/providers/location_provider.dart';
 import 'package:chiller_app/screens/homeScreen.dart';
+import 'package:chiller_app/screens/landing_screen.dart';
 import 'package:chiller_app/screens/login_screen.dart';
 import 'package:chiller_app/screens/map_screen.dart';
 import 'package:chiller_app/screens/splash_screen.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         WelcomeScreen.id:(context)=>WelcomeScreen(),
         MapScreen.id:(context)=>MapScreen(),
         LoginScreen.id:(context)=>LoginScreen(),
+        LandingScreen.id:(context)=>LandingScreen(),
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:chiller_app/providers/location_provider.dart';
 import 'package:chiller_app/screens/homeScreen.dart';
+import 'package:chiller_app/screens/landing_screen.dart';
 import 'package:chiller_app/services/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +19,7 @@ class AuthProvider with ChangeNotifier{
   double latitude;
   double longitude;
   String address;
+  String location;
 
 
   Future<void> verifyPhone({BuildContext context, String number})async{
@@ -107,7 +109,7 @@ class AuthProvider with ChangeNotifier{
                             //user data already exists
                             if(this.screen=='Login'){
                               //need to check if user data already exists in db or not. If it exists, no new data will be added. If not, it'll create new data.
-                              Navigator.pushReplacementNamed(context, HomeScreen.id);
+                              Navigator.pushReplacementNamed(context, LandingScreen.id);
                             }else{
                               //need to update new selected address
                               updateUser(id: user.uid, number: user.phoneNumber);
@@ -117,7 +119,7 @@ class AuthProvider with ChangeNotifier{
                             //user data does not exists. will create new data in db
                             print('${locationData.latitude}:${locationData.longitude}');
                             _createUser(id: user.uid, number: user.phoneNumber);
-                            Navigator.pushReplacementNamed(context, HomeScreen.id);
+                            Navigator.pushReplacementNamed(context, LandingScreen.id);
                           }
                         });
 
@@ -153,6 +155,7 @@ class AuthProvider with ChangeNotifier{
      'latitude':this.latitude,
      'longitude':this.longitude,
      'address':this.address,
+     'location':this.location,
     });
    this.loading = false;
    notifyListeners();
@@ -166,6 +169,7 @@ class AuthProvider with ChangeNotifier{
         'latitude':this.latitude,
         'longitude':this.longitude,
         'address':this.address,
+        'location':this.location,
       });
       this.loading = false;
       notifyListeners();

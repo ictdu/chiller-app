@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chiller_app/screens/landing_screen.dart';
 import 'package:chiller_app/screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
         if(user==null){
           Navigator.pushReplacementNamed(context, WelcomeScreen.id);
         }else{
-          Navigator.pushReplacementNamed(context, HomeScreen.id);
+          //always go to landing screen first to check if the user has set his/her location or not
+          Navigator.pushReplacementNamed(context, LandingScreen.id);
         }
       });
     }

@@ -8,6 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import 'landing_screen.dart';
+
 
 class MapScreen extends StatefulWidget {
   static const String id = 'map-screen';
@@ -153,12 +155,13 @@ class _MapScreenState extends State<MapScreen> {
                                  _auth.latitude = locationData.latitude;
                                  _auth.longitude = locationData.longitude;
                                  _auth.address = locationData.selectedAddress.addressLine;
+                                 _auth.location = locationData.selectedAddress.featureName;
                                });
                                _auth.updateUser(
                                  id: user.uid,
                                  number: user.phoneNumber,
                                );
-                                   Navigator.pushNamed(context, HomeScreen.id);
+                                   Navigator.pushNamed(context, LandingScreen.id);
 
                              }
                            },
