@@ -71,7 +71,7 @@ class _MyAppBarState extends State<MyAppBar> {
             ),
             Flexible(
                 child: Text(
-                  _address,
+                  _address == null ? 'Press here to set delivery location' : _address,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.white,

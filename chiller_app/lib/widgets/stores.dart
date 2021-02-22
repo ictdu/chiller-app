@@ -46,7 +46,7 @@ class _StoresState extends State<Stores> {
   Widget build(BuildContext context) {
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-        stream: _storeServices.getVerifiedStore(),
+        stream: _storeServices.getTopPickedStore(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot){
           if(!snapShot.hasData)return CircularProgressIndicator();
           //confirm if there are nearby store or none
@@ -61,59 +61,76 @@ class _StoresState extends State<Stores> {
           if(shopDistance[0]>10){
             return Container();
           }
-          return Column(
-            children: [
-              Container(
-                child: Flexible(
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: snapShot.data.docs.map((DocumentSnapshot document){
-                      //show vendors within 20km range
-                      if(double.parse(getDistance(document['location']))<20){
-                        return Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: Container(
-                            width: 80,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: Card(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: Image.network(document['imageUrl'], fit: BoxFit.cover,),
+          return Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 30,
+                      child: Image.asset('images/like.gif'),
+                    ),
+                    Text('Top Picked Stores For You', style:
+                    TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18,
+                    ),
+                    ),
+                  ],
+                ),
+                Container(
+                  child: Flexible(
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: snapShot.data.docs.map((DocumentSnapshot document){
+                        //show vendors within 20km range
+                        if(double.parse(getDistance(document['location']))<20){
+                          return Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Container(
+                              width: 80,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 80,
+                                    height: 80,
+                                    child: Card(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(4),
+                                        child: Image.network(document['imageUrl'], fit: BoxFit.cover,),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  height: 35,
-                                  child: Text(document['shopName'], style:
+                                  Container(
+                                    height: 35,
+                                    child: Text(document['shopName'], style:
+                                    TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                                  ),
+                                  Text('${getDistance(document['location'])} Km', style:
                                   TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ), maxLines: 2, overflow: TextOverflow.ellipsis,),
-                                ),
-                                Text('${getDistance(document['location'])} Km', style:
-                                TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.grey
-                                ),)
-                              ],
+                                      fontSize: 10,
+                                      color: Colors.grey
+                                  ),)
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }else{
-                        //if no vendor(s) within the 20km range
-                        return Container();
-                      }
+                          );
+                        }else{
+                          //if no vendor(s) within the 20km range
+                          return Container();
+                        }
 
-                    }).toList(),
+                      }).toList(),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

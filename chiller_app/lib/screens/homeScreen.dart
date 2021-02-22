@@ -26,10 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ImageSlider(),
             Container(
-              height: 300,
+              height: 180,
               child: Stores(),
             ),
           ],

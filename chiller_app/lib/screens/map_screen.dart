@@ -18,7 +18,7 @@ class MapScreen extends StatefulWidget {
 }
 //get current latitude and longitude, and display the position on the google map
 class _MapScreenState extends State<MapScreen> {
-  LatLng currentLocation;
+  LatLng currentLocation = LatLng(37.421632, 122.084664);
   GoogleMapController _mapController;
   bool _locating = false;
   bool _loggedIn = false;
@@ -161,7 +161,7 @@ class _MapScreenState extends State<MapScreen> {
                                  id: user.uid,
                                  number: user.phoneNumber,
                                );
-                                   Navigator.pushNamed(context, LandingScreen.id);
+                                   Navigator.pushNamed(context, HomeScreen.id);
 
                              }
                            },

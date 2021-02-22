@@ -17,6 +17,7 @@ class _LandingScreenState extends State<LandingScreen> {
   User user = FirebaseAuth.instance.currentUser;
   String _location;
   String _address;
+  bool loading = true;
 
   @override
   void initState() {
@@ -28,7 +29,7 @@ class _LandingScreenState extends State<LandingScreen> {
         }else{
           _locationProvider.getCurrentPosition();
           if(_locationProvider.permissionAllowed==true){
-            Navigator.pushReplacementNamed(context, MapScreen.id);
+            Navigator.pushNamed(context, MapScreen.id);
           }else{
             print('Permission is not allowed');
           }
@@ -42,11 +43,12 @@ class _LandingScreenState extends State<LandingScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String location = prefs.getString('location');
     if (location == null){
-      prefs.setString('address', dbResult.data()['location']); //location will not save on db
+      prefs.setString('address', dbResult.data()['location']);
       prefs.setString('location', dbResult.data()['address']);
       setState(() {
         _location = dbResult.data()['location'];
         _address = dbResult.data()['address'];
+        loading = false;
       });
       Navigator.pushReplacementNamed(context, HomeScreen.id);
     }
@@ -56,63 +58,70 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(_location == null ? '' : _location),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(_address == null ? 'Delivery address is not set.' : _address, style:
-              TextStyle(
-                fontWeight: FontWeight.bold,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(_location == null ? '' : _location),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(_address == null ? 'Delivery address is not set.' : _address, style:
+                TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              _address = null
-                  ? 'Please update your delivery location to find the nearest stores from your location'
-                  : _address, textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.grey
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                _address == null
+                    ? 'Please update your delivery location to find the nearest stores from your location'
+                    : _address, textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.grey
+                ),
               ),
             ),
-          ),
-          Container(
-            width: 600,
-            child: Image.asset(
-              'images/city.png',
-              fit: BoxFit.fill,
-              color: Colors.grey,
+            CircularProgressIndicator(),
+            Container(
+              width: 600,
+              child: Image.asset(
+                'images/city.png',
+                fit: BoxFit.fill,
+                color: Colors.black12,
+              ),
             ),
-          ),
-          Visibility(
-            visible: _location != null ? true : false,
-            child: FlatButton(
+            Visibility(
+              visible: _location != null ? true : false,
+              child: FlatButton(
+                color: Theme.of(context).primaryColor,
+                onPressed: (){
+                  Navigator.pushReplacementNamed(context, HomeScreen.id);
+                },
+                child: Text('Confirm Your Location'),
+              ),
+            ),
+            FlatButton(
               color: Theme.of(context).primaryColor,
               onPressed: (){
-                Navigator.pushReplacementNamed(context, HomeScreen.id);
+                _locationProvider.getCurrentPosition();
+                if(_locationProvider.selectedAddress != null){
+                  Navigator.pushReplacementNamed(context, MapScreen.id);
+                }else{
+                  print('Permission is not allowed.');
+                }
               },
-              child: Text('Confirm Your Location'),
+              child: Text(
+                _location != null ? 'Update Location' : 'Set Your Location',
+              style: TextStyle(
+                color: Colors.white,
+              ),),
             ),
-          ),
-          FlatButton(
-            color: Theme.of(context).primaryColor,
-            onPressed: (){
-              _locationProvider.getCurrentPosition();
-              if(_locationProvider.permissionAllowed==true){
-                Navigator.pushReplacementNamed(context, MapScreen.id);
-              }else{
-                print('Permission is not allowed.');
-              }
-            },
-            child: Text(_location != null ? 'Update Location' : 'Confirm Your Location'),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
