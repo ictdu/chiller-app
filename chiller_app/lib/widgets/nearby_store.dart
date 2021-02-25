@@ -30,8 +30,9 @@ class _NearbyStoresState extends State<NearbyStores> {
       return distanceInKm.toStringAsFixed(2);
     }
     return Container(
+      color: Colors.white,
       child: StreamBuilder<QuerySnapshot>(
-        stream: _storeServices.getTopPickedStore(), //will change in the future
+        stream: _storeServices.getNearbyStore(), //will change in the future
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot>snapShot){
           if(!snapShot.hasData)return
               CircularProgressIndicator();
@@ -57,6 +58,9 @@ class _NearbyStoresState extends State<NearbyStores> {
                       ),
                       ),
                     ),
+                  SizedBox(
+                    height: 40,
+                  ),
                   Image.asset('images/city.png', color: Colors.black12,),
                   Positioned(
                     right: 10.0,
@@ -207,11 +211,7 @@ class _NearbyStoresState extends State<NearbyStores> {
                         ),
                       ),
                     ),
-                    query: FirebaseFirestore.instance
-                        .collection('vendors')
-                        .where('accVerified', isEqualTo: true)
-                        .where('isTopPicked', isEqualTo: true)
-                        .orderBy('shopName'),
+                    query: _storeServices.getNearbyStorePagination(),
                     listeners: [
                       refreshedChangeListener,
                     ],

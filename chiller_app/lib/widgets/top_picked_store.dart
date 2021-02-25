@@ -25,6 +25,7 @@ class _TopPickedStoreState extends State<TopPickedStore> {
       return distanceInKm.toStringAsFixed(2);
     }
     return Container(
+      color: Colors.white,
       child: StreamBuilder<QuerySnapshot>(
         stream: _storeServices.getTopPickedStore(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot){
@@ -43,13 +44,13 @@ class _TopPickedStoreState extends State<TopPickedStore> {
             return Padding(
               padding: const EdgeInsets.all(12),
               child: Container(
+                width: MediaQuery.of(context).size.width,
                 child: Text(
                   'Sorry, we currently don\'t have service in your area.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black54,
                     fontSize: 20,
-
                   ),
                 ),
               ),
@@ -64,7 +65,7 @@ class _TopPickedStoreState extends State<TopPickedStore> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: Row(
                       children: [
                         SizedBox(

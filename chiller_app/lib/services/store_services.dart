@@ -12,5 +12,14 @@ class StoreServices {
   getVerifiedStore(){
     return FirebaseFirestore.instance.collection('vendors').where('accVerified', isEqualTo: true).where('shopOpen', isEqualTo: true).orderBy('shopName').snapshots();
   }
+
+  getNearbyStore(){
+    return FirebaseFirestore.instance.collection('vendors').where('accVerified', isEqualTo: true).orderBy('shopName').snapshots();
+  }
+
+  getNearbyStorePagination(){
+    return FirebaseFirestore.instance.collection('vendors').where('accVerified', isEqualTo: true).orderBy('shopName');
+  }
+
 }
 
