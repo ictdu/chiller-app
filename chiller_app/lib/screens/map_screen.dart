@@ -119,7 +119,9 @@ class _MapScreenState extends State<MapScreen> {
                          icon: Icon(Icons.location_searching,
                          color: Theme.of(context).primaryColor,),
                          label: Flexible(
-                           child: Text(_locating? 'Locating...' : locationData.selectedAddress.featureName,
+                           child: Text(_locating? 'Locating...' : locationData.selectedAddress == null
+                             ? 'Locating...'
+                             :locationData.selectedAddress.featureName,
                            overflow: TextOverflow.ellipsis,
                              style: TextStyle(
                              fontWeight: FontWeight.bold,
@@ -130,7 +132,8 @@ class _MapScreenState extends State<MapScreen> {
                    ),
                    Padding(
                      padding: const EdgeInsets.only(left: 20, right: 20),
-                     child: Text(_locating ? '' : locationData.selectedAddress.addressLine,
+                     child: Text(_locating ? '' : locationData.selectedAddress == null
+                       ? '' : locationData.selectedAddress.addressLine,
                       style: TextStyle(
                         color: Colors.black54,
 

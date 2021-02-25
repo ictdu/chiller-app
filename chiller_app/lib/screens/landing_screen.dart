@@ -1,10 +1,7 @@
 import 'package:chiller_app/providers/location_provider.dart';
-import 'package:chiller_app/screens/homeScreen.dart';
 import 'package:chiller_app/screens/map_screen.dart';
-import 'package:chiller_app/services/user_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LandingScreen extends StatefulWidget {
   static const String id = 'landing-screen';
@@ -14,46 +11,7 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
   LocationProvider _locationProvider = LocationProvider();
-  User user = FirebaseAuth.instance.currentUser;
-  String _location;
-  String _address;
-  bool loading = true;
-
-  @override
-  void initState() {
-    UserServices _userServices = UserServices();
-    _userServices.getUserById(user.uid).then((result)async{
-      if(result!=null){
-        if(result.data()['latitude']!=null){
-          getPrefs(result);
-        }else{
-          _locationProvider.getCurrentPosition();
-          if(_locationProvider.permissionAllowed==true){
-            Navigator.pushNamed(context, MapScreen.id);
-          }else{
-            print('Permission is not allowed');
-          }
-        }
-      }
-    });
-    super.initState();
-  }
-
-  getPrefs(dbResult)async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String location = prefs.getString('location');
-    if (location == null){
-      prefs.setString('address', dbResult.data()['location']);
-      prefs.setString('location', dbResult.data()['address']);
-      setState(() {
-        _location = dbResult.data()['location'];
-        _address = dbResult.data()['address'];
-        loading = false;
-      });
-      Navigator.pushReplacementNamed(context, HomeScreen.id);
-    }
-    Navigator.pushReplacementNamed(context, HomeScreen.id);
-  }
+  bool _loading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +22,7 @@ class _LandingScreenState extends State<LandingScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(_location == null ? '' : _location),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(_address == null ? 'Delivery address is not set.' : _address, style:
+              child: Text('Delivery address is not set.', style:
                 TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -77,9 +31,7 @@ class _LandingScreenState extends State<LandingScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                _address == null
-                    ? 'Please update your delivery location to find the nearest stores from your location'
-                    : _address, textAlign: TextAlign.center,
+                    'Please update your delivery location to find the nearest stores from your location', textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.grey
                 ),
@@ -94,28 +46,30 @@ class _LandingScreenState extends State<LandingScreen> {
                 color: Colors.black12,
               ),
             ),
-            Visibility(
-              visible: _location != null ? true : false,
-              child: FlatButton(
-                color: Theme.of(context).primaryColor,
-                onPressed: (){
-                  Navigator.pushReplacementNamed(context, HomeScreen.id);
-                },
-                child: Text('Confirm Your Location'),
-              ),
-            ),
-            FlatButton(
+            _loading ? CircularProgressIndicator() : FlatButton(
               color: Theme.of(context).primaryColor,
-              onPressed: (){
-                _locationProvider.getCurrentPosition();
-                if(_locationProvider.selectedAddress != null){
+              onPressed: ()async{
+                setState(() {
+                  _loading = true;
+                });
+                await _locationProvider.getCurrentPosition();
+                if(_locationProvider.permissionAllowed == true){
                   Navigator.pushReplacementNamed(context, MapScreen.id);
                 }else{
-                  print('Permission is not allowed.');
+                  Future.delayed(Duration(seconds: 4),(){
+                    if(_locationProvider.permissionAllowed == false){
+                      print('Permission is not allowed.');
+                      setState(() {
+                        _loading = false;
+                      });
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text('Please allow permission to access location'),
+                      ));
+                    }
+                  });
                 }
               },
-              child: Text(
-                _location != null ? 'Update Location' : 'Set Your Location',
+              child: Text('Set Your Location',
               style: TextStyle(
                 color: Colors.white,
               ),),

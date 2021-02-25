@@ -1,5 +1,6 @@
 import 'package:chiller_app/providers/auth_provider.dart';
 import 'package:chiller_app/providers/location_provider.dart';
+import 'package:chiller_app/providers/store_provider.dart';
 import 'package:chiller_app/screens/homeScreen.dart';
 import 'package:chiller_app/screens/landing_screen.dart';
 import 'package:chiller_app/screens/login_screen.dart';
@@ -20,6 +21,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_)=>LocationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_)=>StoreProvider(),
         ),
       ],
   child: MyApp(),

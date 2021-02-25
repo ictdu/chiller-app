@@ -1,7 +1,8 @@
 import 'package:chiller_app/providers/auth_provider.dart';
 import 'package:chiller_app/widgets/image_slider.dart';
 import 'package:chiller_app/widgets/my_appbar.dart';
-import 'package:chiller_app/widgets/stores.dart';
+import 'package:chiller_app/widgets/nearby_store.dart';
+import 'package:chiller_app/widgets/top_picked_store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,17 +25,14 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: Size.fromHeight(112),
         child: MyAppBar(),
       ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ImageSlider(),
-            Container(
-              height: 180,
-              child: Stores(),
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          ImageSlider(),
+          Container(
+            child: TopPickedStore(),
+          ),
+          NearbyStores(),
+        ],
       ),
     );
   }
