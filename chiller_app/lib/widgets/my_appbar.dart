@@ -80,24 +80,6 @@ class _MyAppBarState extends State<MyAppBar> {
           ],
         ),
       ),
-      actions: [
-        IconButton(
-          //temporary sign out button
-          icon: Icon(Icons.power_settings_new,
-            color: Colors.white,),
-          onPressed: (){
-            FirebaseAuth.instance.signOut();
-            Navigator.pushReplacementNamed(context, WelcomeScreen.id);
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.account_circle_outlined,
-            color: Colors.white,),
-          onPressed: (){
-
-          },
-        ),
-      ],
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(56),
         child: Padding(

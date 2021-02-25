@@ -1,10 +1,13 @@
 import 'package:chiller_app/providers/auth_provider.dart';
 import 'package:chiller_app/providers/location_provider.dart';
 import 'package:chiller_app/providers/store_provider.dart';
+import 'package:chiller_app/screens/favourite_screen.dart';
 import 'package:chiller_app/screens/homeScreen.dart';
 import 'package:chiller_app/screens/landing_screen.dart';
 import 'package:chiller_app/screens/login_screen.dart';
+import 'package:chiller_app/screens/main_screen.dart';
 import 'package:chiller_app/screens/map_screen.dart';
+import 'package:chiller_app/screens/orders_screen.dart';
 import 'package:chiller_app/screens/splash_screen.dart';
 import 'package:chiller_app/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +51,10 @@ class MyApp extends StatelessWidget {
         MapScreen.id:(context)=>MapScreen(),
         LoginScreen.id:(context)=>LoginScreen(),
         LandingScreen.id:(context)=>LandingScreen(),
+        MainScreen.id:(context)=>MainScreen(),
+        FavouriteScreen.id:(context)=>FavouriteScreen(),
+        MyOrders.id:(context)=>MyOrders(),
+        FavouriteScreen.id:(context)=>FavouriteScreen(),
       },
     );
   }

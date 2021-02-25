@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chiller_app/screens/landing_screen.dart';
+import 'package:chiller_app/screens/main_screen.dart';
 import 'package:chiller_app/screens/welcome_screen.dart';
 import 'package:chiller_app/services/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
     prefs.setString('address', result['address']);
     prefs.setString('location', result['location']);
     //after updating savedprefs, navigate to homescreen
-    Navigator.pushReplacementNamed(context, HomeScreen.id);
+    Navigator.pushReplacementNamed(context, MainScreen.id);
   }
 
   //splashscreen design (image and text)

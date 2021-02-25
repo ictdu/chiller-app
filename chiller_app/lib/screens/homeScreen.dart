@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ];
         },
         body: ListView(
+          padding: EdgeInsets.only(top: 0.0),
           children: [
             ImageSlider(),
             Container(
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: TopPickedStore(),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 4.0),
+              padding: const EdgeInsets.only(top: 12),
               child: NearbyStores(),
             ),
           ],
