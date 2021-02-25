@@ -35,7 +35,7 @@ class _MyAppBarState extends State<MyAppBar> {
   @override
   Widget build(BuildContext context) {
     final locationData = Provider.of<LocationProvider>(context);
-    return AppBar(
+    return SliverAppBar(
       automaticallyImplyLeading: false,
       elevation: 0.0,
       title: FlatButton(
