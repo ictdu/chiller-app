@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final locationData = Provider.of<LocationProvider>(context);
 
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Container(
           child: Padding(

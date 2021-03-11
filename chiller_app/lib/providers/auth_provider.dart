@@ -1,6 +1,6 @@
 import 'package:chiller_app/providers/location_provider.dart';
-import 'package:chiller_app/screens/homeScreen.dart';
 import 'package:chiller_app/screens/landing_screen.dart';
+import 'package:chiller_app/screens/main_screen.dart';
 import 'package:chiller_app/services/user_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -110,13 +110,13 @@ class AuthProvider with ChangeNotifier{
                             if(this.screen=='Login'){
                               //need to check if user data already exists in db or not. If it exists, no new data will be added. If not, it'll create new data.
                               if(snapShot.data()['address']!=null){
-                                Navigator.pushReplacementNamed(context, HomeScreen.id);
+                                Navigator.pushReplacementNamed(context, MainScreen.id);
                               }
                               Navigator.pushReplacementNamed(context, LandingScreen.id);
                             }else{
                               //need to update new selected address
                               updateUser(id: user.uid, number: user.phoneNumber);
-                              Navigator.pushReplacementNamed(context, HomeScreen.id);
+                              Navigator.pushReplacementNamed(context, MainScreen.id);
                             }
                           }else{
                             //user data does not exists. will create new data in db

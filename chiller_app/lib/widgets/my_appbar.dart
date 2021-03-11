@@ -1,8 +1,7 @@
 import 'package:chiller_app/providers/location_provider.dart';
 import 'package:chiller_app/screens/map_screen.dart';
-import 'package:chiller_app/screens/welcome_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,7 +41,15 @@ class _MyAppBarState extends State<MyAppBar> {
         onPressed: (){
           locationData.getCurrentPosition();
           if(locationData.permissionAllowed==true){
-            Navigator.pushNamed(context, MapScreen.id);
+            pushNewScreenWithRouteSettings(
+              context,
+              settings: RouteSettings(name: MapScreen.id),
+              screen: MapScreen(),
+              withNavBar: false,
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+
+
           }else{
             print('Permission is not allowed');
           }

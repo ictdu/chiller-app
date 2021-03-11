@@ -1,14 +1,13 @@
 import 'package:chiller_app/providers/auth_provider.dart';
 import 'package:chiller_app/providers/location_provider.dart';
-import 'package:chiller_app/screens/homeScreen.dart';
 import 'package:chiller_app/screens/login_screen.dart';
+import 'package:chiller_app/screens/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'landing_screen.dart';
 
 
 class MapScreen extends StatefulWidget {
@@ -164,7 +163,7 @@ class _MapScreenState extends State<MapScreen> {
                                  id: user.uid,
                                  number: user.phoneNumber,
                                );
-                                   Navigator.pushNamed(context, HomeScreen.id);
+                                   Navigator.pushNamed(context, MainScreen.id);
 
                              }
                            },
