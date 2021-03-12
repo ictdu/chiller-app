@@ -1,5 +1,5 @@
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
-import 'package:chiller_admin/screens/HomeScreen.dart';
+import 'package:chiller_admin/screens/home_screen.dart';
 import 'package:chiller_admin/services/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,8 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
       progressDialog.show();
       _services.getAdminCredentials(username).then((value) async {
         if(value.exists){
-          if(value.data()['username']==username){
-            if(value.data()['password']==password){
+          if(value.data()['username'] == username){
+            if(value.data()['password'] == password){
               //if username and password are correct
               try{
                 UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
@@ -69,8 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         progressDialog.dismiss();
         _showMyDialog(
-            title: 'Invalid Credentials',
-            message: 'No data exist in the database.'
+            title: 'Invalid Username',
+            message: 'The username you have entered is invalid.'
         );
       });
     }

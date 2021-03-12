@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:chiller_admin/screens/HomeScreen.dart';
+import 'package:chiller_admin/screens/home_screen.dart';
 import 'package:chiller_admin/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
