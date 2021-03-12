@@ -1,16 +1,12 @@
 import 'package:ars_progress_dialog/ars_progress_dialog.dart';
+import 'package:chiller_admin/screens/HomeScreen.dart';
 import 'package:chiller_admin/services/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'HomeScreen.dart';
-
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+  static const String id = 'login-screen';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -19,60 +15,67 @@ class _LoginScreenState extends State<LoginScreen> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final _formKey = GlobalKey<FormState>();
   FirebaseServices _services = FirebaseServices();
-  String username;
-  String password;
+  var _usernameTextController = TextEditingController();
+  var _passwordTextController = TextEditingController();
+  bool _visible = false;
 
   @override
   Widget build(BuildContext context) {
     ArsProgressDialog progressDialog = ArsProgressDialog(
         context,
         blur: 2,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColor.withOpacity(.3),
         animationDuration: Duration(milliseconds: 500)
     );
 
-    Future<void>_login()async{
+    _login({username, password})async{
       progressDialog.show();
-      _services.getAdminCredentials().then((value){
-        value.docs.forEach((doc) async {
-          if(doc.get('username')==username){
-            if(doc.get('password')==password){
-              UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
-              progressDialog.dismiss();
-              if(userCredential.user.uid != null){
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
-                return;
-              }else{
+      _services.getAdminCredentials(username).then((value) async {
+        if(value.exists){
+          if(value.data()['username']==username){
+            if(value.data()['password']==password){
+              //if username and password are correct
+              try{
+                UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+                if(userCredential!=null){
+                  //if signed-in successfully, navigate to homescreen
+                  progressDialog.dismiss();
+                  Navigator.pushReplacementNamed(context, HomeScreen.id);
+                }
+              }catch(e){
+                //if signing-in is failed
+                progressDialog.dismiss();
                 _showMyDialog(
                     title: 'Login',
-                    message: 'Login Failed.'
+                    message: '${e.toString()}'
                 );
               }
-            }else{
-              progressDialog.dismiss();
-              _showMyDialog(
-                  title: 'Incorrect Password',
-                  message: 'The password you have entered is incorrect.'
-              );
+              return;
             }
-          }else{
+            //if password is incorrect
             progressDialog.dismiss();
             _showMyDialog(
-                title: 'Invalid Username',
-                message: 'The username you have entered is invalid.'
+                title: 'Incorrect Password',
+                message: 'The password you have entered is incorrect.'
             );
+            return;
           }
-        });
+          //if username is incorrect
+          progressDialog.dismiss();
+          _showMyDialog(
+            title: 'Invalid Username',
+            message: 'The username you have entered is invalid.'
+          );
+        }
+        progressDialog.dismiss();
+        _showMyDialog(
+            title: 'Invalid Credentials',
+            message: 'No data exist in the database.'
+        );
       });
     }
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        title: Text(widget.title, style: TextStyle(color: Colors.white),),
-        centerTitle: true,
-      ),
       body: FutureBuilder(
         // Initialize FlutterFire:
         future: _initialization,
@@ -119,26 +122,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Column(
                                 children: [
                                   Image.asset('images/logo.png', height: 100, width: 100,),
-                                  Text('CHILLER APP ADMIN', style:
+                                  Text('CHILLER ADMIN', style:
                                   TextStyle(
                                       fontWeight: FontWeight.w900,
                                       fontSize: 20
                                   ),),
                                   SizedBox(height: 21,),
                                   TextFormField(
+                                    controller: _usernameTextController,
                                     validator: (value){
                                       if(value.isEmpty){
                                         return 'Please enter your username.';
                                       }
-                                      setState(() {
-                                        username = value;
-                                      });
                                       return null;
                                     },
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(Icons.person),
                                       labelText: 'Username',
-                                      contentPadding: EdgeInsets.only(left: 20, right: 20),
+                                      contentPadding: EdgeInsets.only(left: 20),
                                       border: OutlineInputBorder(),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -150,6 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(height: 12,),
                                   TextFormField(
+                                    controller: _passwordTextController,
                                     validator: (value){
                                       if(value.isEmpty){
                                         return 'Please enter your password.';
@@ -157,16 +159,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if(value.length<6){
                                         return 'Password must be at least 6 \ncharacters.';
                                       }
-                                      setState(() {
-                                        password = value;
-                                      });
                                       return null;
                                     },
-                                    obscureText: true,
+                                    obscureText: _visible == false ? true : false,
                                     decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        icon: _visible ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                                        onPressed: (){
+                                          setState(() {
+                                            _visible = !_visible;
+                                          });
+                                        },
+                                      ),
                                       prefixIcon: Icon(Icons.vpn_key_sharp),
                                       labelText: 'Password',
-                                      contentPadding: EdgeInsets.only(left: 20, right: 20),
+                                      contentPadding: EdgeInsets.only(left: 20),
                                       border: OutlineInputBorder(),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -186,7 +193,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: TextButton(
                                       onPressed: ()async{
                                         if(_formKey.currentState.validate()){
-                                          _login();
+                                          _login(
+                                            username: _usernameTextController.text,
+                                            password: _passwordTextController.text,
+                                          );
                                         }
                                       },
                                       style: TextButton.styleFrom(

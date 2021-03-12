@@ -1,3 +1,4 @@
+import 'package:chiller_admin/screens/HomeScreen.dart';
 import 'package:chiller_admin/screens/login_screen.dart';
 import 'package:chiller_admin/screens/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +19,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Theme.of(context).primaryColor,
       ),
       home: SplashScreen(),
+      routes: {
+        HomeScreen.id:(context)=>HomeScreen(),
+        SplashScreen.id:(context)=>SplashScreen(),
+        LoginScreen.id:(context)=>LoginScreen(),
+      },
     );
   }
 }
