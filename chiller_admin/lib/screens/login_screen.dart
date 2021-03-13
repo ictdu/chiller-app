@@ -45,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
               }catch(e){
                 //if signing-in is failed
                 progressDialog.dismiss();
-                _showMyDialog(
+                _services.showMyDialog(
+                  context: context,
                     title: 'Login',
                     message: '${e.toString()}'
                 );
@@ -54,23 +55,26 @@ class _LoginScreenState extends State<LoginScreen> {
             }
             //if password is incorrect
             progressDialog.dismiss();
-            _showMyDialog(
+            _services.showMyDialog(
+                context: context,
                 title: 'Incorrect Password',
-                message: 'The password you have entered is incorrect.'
+                message: 'The password you have entered is incorrect, please try again.'
             );
             return;
           }
           //if username is incorrect
           progressDialog.dismiss();
-          _showMyDialog(
+          _services.showMyDialog(
+              context: context,
             title: 'Invalid Username',
-            message: 'The username you have entered is invalid.'
+            message: 'The username you have entered is invalid, please try again.'
           );
         }
         progressDialog.dismiss();
-        _showMyDialog(
+        _services.showMyDialog(
+            context: context,
             title: 'Invalid Username',
-            message: 'The username you have entered is invalid.'
+            message: 'The username you have entered is invalid, please try again.'
         );
       });
     }
@@ -223,34 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         },
       ),
-    );
-  }
-
-  Future<void> _showMyDialog({title, message}) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(message),
-                Text('Please try again.'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 

@@ -8,7 +8,6 @@ import 'package:chiller_admin/screens/orders_screen.dart';
 import 'package:chiller_admin/screens/settings_screen.dart';
 import 'package:chiller_admin/screens/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
