@@ -1,11 +1,13 @@
 import 'package:chiller_admin/screens/admin_users.dart';
 import 'package:chiller_admin/screens/category_screen.dart';
+import 'package:chiller_admin/screens/delivery_person.dart';
 import 'package:chiller_admin/screens/home_screen.dart';
 import 'package:chiller_admin/screens/login_screen.dart';
 import 'package:chiller_admin/screens/manage_banners.dart';
 import 'package:chiller_admin/screens/notification_screen.dart';
 import 'package:chiller_admin/screens/orders_screen.dart';
 import 'package:chiller_admin/screens/settings_screen.dart';
+import 'package:chiller_admin/screens/vendor_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
@@ -28,6 +30,16 @@ class SideBarWidget{
           icon: CupertinoIcons.photo,
         ),
         MenuItem(
+          title: 'Vendors',
+          route: VendorScreen.id,
+          icon: CupertinoIcons.group_solid,
+        ),
+        MenuItem(
+          title: 'Delivery Person',
+          route: DeliveryScreen.id,
+          icon: Icons.delivery_dining,
+        ),
+        MenuItem(
           title: 'Categories',
           route: CategoryScreen.id,
           icon: Icons.category,
@@ -45,7 +57,7 @@ class SideBarWidget{
         MenuItem(
           title: 'Admin Users',
           route: AdminUsers.id,
-          icon: Icons.person_rounded,
+          icon: Icons.admin_panel_settings_outlined,
         ),
         MenuItem(
           title: 'Settings',

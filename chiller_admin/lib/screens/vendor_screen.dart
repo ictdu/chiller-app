@@ -1,17 +1,20 @@
-import 'package:chiller_admin/widgets/banner_upload_widget.dart';
-import 'package:chiller_admin/widgets/banner_widget.dart';
 import 'package:chiller_admin/widgets/sidebar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:chiller_admin/widgets/vendor_datatable_widget.dart';
+import 'package:chiller_admin/widgets/vendor_filter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
-class BannerScreen extends StatelessWidget {
-  static const String id = 'banner-screen';
+class VendorScreen extends StatefulWidget {
+  static const String id = 'vendor-screen';
 
+  @override
+  _VendorScreenState createState() => _VendorScreenState();
+}
+
+class _VendorScreenState extends State<VendorScreen> {
   @override
   Widget build(BuildContext context) {
     SideBarWidget _sideBar = SideBarWidget();
-
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,7 +28,7 @@ class BannerScreen extends StatelessWidget {
           ),
         ),
       ),
-      sideBar: _sideBar.sideBarMenus(context, BannerScreen.id),
+      sideBar: _sideBar.sideBarMenus(context, VendorScreen.id),
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.topLeft,
@@ -34,25 +37,22 @@ class BannerScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Edit/Add/Delete Banner',
+                'Manage Vendors',
                 style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 36
+                    fontWeight: FontWeight.w700,
+                    fontSize: 36
                 ),
               ),
-              Text('Add / Delete Home Screen Banner Images'),
+              Text('Manage Vendors Activities'),
               Divider(thickness: 5),
-              //Banners
-              BannerWidget(),
-              Divider(thickness: 5,),
-              BannerUploadWidget(),
+              VendorFilterWidget(),
+              Divider(thickness: 5),
+              VendorDataTable(),
+              Divider(thickness: 5),
             ],
           ),
         ),
       ),
     );
   }
-
-
-
 }

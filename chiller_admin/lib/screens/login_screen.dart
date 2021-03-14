@@ -98,8 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     Theme.of(context).primaryColor,
                     Colors.white
                   ],
-                  stops: [1.0, 1.0], //half screen color
-                  //stops: [0.8, 8.0],
+                  //stops: [1.0, 1.0], //half screen color
+                  stops: [0.8, 8.0],
                   begin: Alignment.topCenter,
                   end: Alignment(0.0,0.0),
                 ),

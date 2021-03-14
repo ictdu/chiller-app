@@ -35,8 +35,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('images/logo.png', width: 100, height: 100,),
+            Text('Chiller Admin',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),),
+            SizedBox(height: 18,),
+            CircularProgressIndicator(),
+          ],
+        ),
+      ),
     );
   }
 }
