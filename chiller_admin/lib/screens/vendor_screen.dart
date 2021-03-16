@@ -1,6 +1,5 @@
 import 'package:chiller_admin/widgets/sidebar.dart';
 import 'package:chiller_admin/widgets/vendor_datatable_widget.dart';
-import 'package:chiller_admin/widgets/vendor_filter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
@@ -44,8 +43,6 @@ class _VendorScreenState extends State<VendorScreen> {
                 ),
               ),
               Text('Manage Vendors Activities'),
-              Divider(thickness: 5),
-              VendorFilterWidget(),
               Divider(thickness: 5),
               VendorDataTable(),
               Divider(thickness: 5),

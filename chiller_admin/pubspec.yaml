@@ -19,6 +19,7 @@ dependencies:
   firebase_storage: ^8.0.0
   ars_progress_dialog: ^0.1.2
   flutter_admin_scaffold: ^0.0.5
+  chips_choice: ^2.0.1
 
 dev_dependencies:
   flutter_test:
