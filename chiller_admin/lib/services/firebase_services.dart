@@ -7,6 +7,7 @@ class FirebaseServices{
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference banners = FirebaseFirestore.instance.collection('slider');
   CollectionReference vendors = FirebaseFirestore.instance.collection('vendors');
+  CollectionReference category = FirebaseFirestore.instance.collection('category');
   FirebaseStorage storage = FirebaseStorage.instance;
 
   //login credentials
@@ -14,6 +15,8 @@ class FirebaseServices{
     var result = FirebaseFirestore.instance.collection('Admin').doc(id).get();
     return result;
   }
+
+  //banner
 
   //upload banner image
   Future<String>uploadBannerImageToDb(url)async{
@@ -31,6 +34,8 @@ class FirebaseServices{
     firestore.collection('slider').doc(id).delete();
   }
 
+  //vendor
+
   updateVendorStatus({id, status})async{
     vendors.doc(id).update({
       'accVerified' : status ? false : true,
@@ -42,6 +47,22 @@ class FirebaseServices{
       'isTopPicked' : status ? false : true,
     });
   }
+
+  //category
+
+  //upload categery image
+  Future<String>uploadCategoryImageToDb(url, catName)async{
+    String downloadUrl = await storage.ref(url).getDownloadURL();
+    if(downloadUrl != null){
+      category.doc(catName).set({
+        'image': downloadUrl,
+        'name': catName,
+      });
+    }
+    return downloadUrl;
+  }
+
+  //dialogbox
 
   Future<void> confirmDeleteDialog({title, message, context,id}) async {
     return showDialog<void>(

@@ -1,5 +1,5 @@
 import 'package:chiller_admin/services/firebase_services.dart';
-import 'package:chiller_admin/widgets/vendor_details_box.dart';
+import 'package:chiller_admin/widgets/vendor/vendor_details_box.dart';
 import 'package:chips_choice/chips_choice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';

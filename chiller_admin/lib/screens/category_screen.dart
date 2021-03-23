@@ -1,3 +1,5 @@
+import 'package:chiller_admin/widgets/category/category_list_widget.dart';
+import 'package:chiller_admin/widgets/category/create_category_widget.dart';
 import 'package:chiller_admin/widgets/sidebar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,7 @@ class CategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SideBarWidget _sideBar = SideBarWidget();
     return AdminScaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.black87,
         iconTheme: IconThemeData(
@@ -22,15 +24,26 @@ class CategoryScreen extends StatelessWidget {
         ),
       ),
       sideBar: _sideBar.sideBarMenus(context, CategoryScreen.id),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Text(
-              'Edit/Add/Delete Category',
-              style: TextStyle(
-
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Categories',
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 36
+                ),
               ),
-            ),
+              Text('Add new categories and sub-categories'),
+              Divider(thickness: 5),
+              CreateCategory(),
+              Divider(thickness: 5),
+              CategoryListWidget(),
+            ],
           ),
         ),
       ),

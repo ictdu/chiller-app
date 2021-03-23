@@ -1,5 +1,5 @@
 import 'package:chiller_admin/widgets/sidebar.dart';
-import 'package:chiller_admin/widgets/vendor_datatable_widget.dart';
+import 'package:chiller_admin/widgets/vendor/vendor_datatable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
@@ -15,7 +15,7 @@ class _VendorScreenState extends State<VendorScreen> {
   Widget build(BuildContext context) {
     SideBarWidget _sideBar = SideBarWidget();
     return AdminScaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.black87,
         iconTheme: IconThemeData(

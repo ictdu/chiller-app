@@ -1,5 +1,5 @@
-import 'package:chiller_admin/widgets/banner_upload_widget.dart';
-import 'package:chiller_admin/widgets/banner_widget.dart';
+import 'package:chiller_admin/widgets/banner/banner_upload_widget.dart';
+import 'package:chiller_admin/widgets/banner/banner_widget.dart';
 import 'package:chiller_admin/widgets/sidebar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class BannerScreen extends StatelessWidget {
     SideBarWidget _sideBar = SideBarWidget();
 
     return AdminScaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.black87,
         iconTheme: IconThemeData(

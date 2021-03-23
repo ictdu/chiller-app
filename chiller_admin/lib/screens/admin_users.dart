@@ -8,7 +8,7 @@ class AdminUsers extends StatelessWidget {
   Widget build(BuildContext context) {
     SideBarWidget _sideBar = SideBarWidget();
     return AdminScaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.black87,
         iconTheme: IconThemeData(
