@@ -39,16 +39,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset('images/login.gif',
                               height: 250,),
-                            Text('LOGIN', style:
-                            TextStyle(
-                              fontFamily: 'Anton',
-                              fontSize: 30,
-                            ),
-                            ),
                           ],
+                        ),
+                        Text('LOGIN', style:
+                        TextStyle(
+                          fontFamily: 'Anton',
+                          fontSize: 30,
+                        ),
                         ),
                         SizedBox(height: 20,),
                         TextFormField(

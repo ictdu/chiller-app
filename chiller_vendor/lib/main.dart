@@ -1,7 +1,9 @@
 
 import 'package:chiller_vendor/providers/auth_provider.dart';
+import 'package:chiller_vendor/screens/add_product_screen.dart';
 import 'package:chiller_vendor/screens/home_screen.dart';
 import 'package:chiller_vendor/screens/login_screen.dart';
+import 'package:chiller_vendor/screens/product_screen.dart';
 import 'package:chiller_vendor/screens/register_screen.dart';
 import 'package:chiller_vendor/screens/splash_screen.dart';
 import 'package:chiller_vendor/widgets/reset_password_screen.dart';
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
         HomeScreen.id:(context)=>HomeScreen(),
         LoginScreen.id:(context)=>LoginScreen(),
         ResetPassword.id:(context)=>ResetPassword(),
+        ProductScreen.id:(context)=>ProductScreen(),
+        AddNewProduct.id:(context)=>AddNewProduct(),
       },
     );
   }
