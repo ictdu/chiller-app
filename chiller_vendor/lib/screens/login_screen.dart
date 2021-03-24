@@ -33,164 +33,164 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Center(
               child: SingleChildScrollView(
                 child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset('images/login.gif',
-                            height: 250,),
-                          Text('LOGIN', style:
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset('images/login.gif',
+                              height: 250,),
+                            Text('LOGIN', style:
                             TextStyle(
                               fontFamily: 'Anton',
                               fontSize: 30,
                             ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20,),
+                        TextFormField(
+                          controller: _emailTextController,
+                          validator: (value){
+                            if(value.isEmpty){
+                              return 'Enter email';
+                            }
+                            final bool _isValid = EmailValidator.validate(_emailTextController.text);
+                            if(!_isValid){
+                              return 'Invalid email format';
+                            }
+                            setState(() {
+                              email = value;
+                            });
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.zero,
+                            labelText: 'Email',
+                            prefixIcon: Icon(Icons.email_outlined),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            focusColor: Theme.of(context).primaryColor,
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 20,),
-                      TextFormField(
-                        controller: _emailTextController,
+                        ),
+                        SizedBox(height: 20,),
+                        TextFormField(
                         validator: (value){
                           if(value.isEmpty){
-                            return 'Enter email';
+                            return 'Enter password';
                           }
-                          final bool _isValid = EmailValidator.validate(_emailTextController.text);
-                          if(!_isValid){
-                            return 'Invalid email format';
+                          if(value.length<6){
+                            return 'Password must be at least 6 characters';
                           }
                           setState(() {
-                            email = value;
+                            password = value;
                           });
                           return null;
                         },
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.zero,
-                          labelText: 'Email',
-                          prefixIcon: Icon(Icons.email_outlined),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          focusColor: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                      TextFormField(
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'Enter password';
-                        }
-                        if(value.length<6){
-                          return 'Password must be at least 6 characters';
-                        }
-                        setState(() {
-                          password = value;
-                        });
-                        return null;
-                      },
-                        obscureText: _visible == false ? true : false,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                              icon: _visible ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
-                            onPressed: (){
-                                setState(() {
-                                  _visible = !_visible;
-                                });
-                            },
-                          ),
-                          enabledBorder: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.zero,
-                          labelText: 'Password',
-                          prefixIcon: Icon(Icons.vpn_key_outlined),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          focusColor: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              Navigator.pushReplacementNamed(context, ResetPassword.id);
-                            },
-                            child: Text('Forgot password?', textAlign: TextAlign.end, style:
-                              TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: FlatButton(
-                              color: Theme.of(context).primaryColor,
-                                child: _loading ? LinearProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                                  backgroundColor: Colors.transparent,
-                                ) : Text('Login', style:
-                                  TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                          obscureText: _visible == false ? true : false,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                icon: _visible ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
                               onPressed: (){
-                                if(_formKey.currentState.validate()){
                                   setState(() {
-                                    _loading = true;
+                                    _visible = !_visible;
                                   });
-                                  _authData.loginVendor(email, password).then((credential){
-                                    if(credential!=null){
-                                      setState(() {
-                                        _loading = false;
-                                      });
-                                      Navigator.pushReplacementNamed(context, HomeScreen.id);
-                                    }
-                                  });
-                                }else{
-                                  setState(() {
-                                    _loading = false;
-                                  });
-                                  Scaffold.of(context).showSnackBar(SnackBar(content:
-                                      Text(_authData.error)
-                                  ));
-                                }
                               },
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              Navigator.pushReplacementNamed(context, RegisterScreen.id);
-                            },
-                            child: Text('Don\'t have an account? Create a new one.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
+                            enabledBorder: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.zero,
+                            labelText: 'Password',
+                            prefixIcon: Icon(Icons.vpn_key_outlined),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
                                 color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),),
+                              ),
+                            ),
+                            focusColor: Theme.of(context).primaryColor,
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 20,)
-                    ],
+                        ),
+                        SizedBox(height: 10,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                Navigator.pushReplacementNamed(context, ResetPassword.id);
+                              },
+                              child: Text('Forgot password?', textAlign: TextAlign.end, style:
+                                TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: FlatButton(
+                                color: Theme.of(context).primaryColor,
+                                  child: _loading ? LinearProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                    backgroundColor: Colors.transparent,
+                                  ) : Text('Login', style:
+                                    TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                onPressed: (){
+                                  if(_formKey.currentState.validate()){
+                                    setState(() {
+                                      _loading = true;
+                                    });
+                                    _authData.loginVendor(email, password).then((credential){
+                                      if(credential!=null){
+                                        setState(() {
+                                          _loading = false;
+                                        });
+                                        Navigator.pushReplacementNamed(context, HomeScreen.id);
+                                      }
+                                    });
+                                  }else{
+                                    setState(() {
+                                      _loading = false;
+                                    });
+                                    Scaffold.of(context).showSnackBar(SnackBar(content:
+                                        Text(_authData.error)
+                                    ));
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                Navigator.pushReplacementNamed(context, RegisterScreen.id);
+                              },
+                              child: Text('Don\'t have an account? Create a new one.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20,)
+                      ],
+                    ),
                   ),
                 ),
               ),

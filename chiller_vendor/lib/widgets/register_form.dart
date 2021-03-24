@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chiller_vendor/providers/auth_provider.dart';
 import 'package:chiller_vendor/screens/home_screen.dart';
+import 'package:chiller_vendor/screens/login_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -275,9 +276,23 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: (){
+                  Navigator.pushReplacementNamed(context, LoginScreen.id);
+                },
+                child: Text('Already have an account? Login here.', textAlign: TextAlign.center, style:
+                TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),),
+              ),
+            ],
           ),
+          SizedBox(height: 10),
           Row(
             children: [
               Expanded(
