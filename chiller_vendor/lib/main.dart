@@ -1,5 +1,6 @@
 
 import 'package:chiller_vendor/providers/auth_provider.dart';
+import 'package:chiller_vendor/providers/product_provider.dart';
 import 'package:chiller_vendor/screens/add_product_screen.dart';
 import 'package:chiller_vendor/screens/home_screen.dart';
 import 'package:chiller_vendor/screens/login_screen.dart';
@@ -19,6 +20,7 @@ void main() async {
   runApp(MultiProvider(
       providers: [
         Provider(create: (_) => AuthProvider()),
+        Provider(create: (_) => ProductProvider()),
       ],
     child: MyApp(),
   ),
