@@ -10,6 +10,7 @@ import 'package:chiller_vendor/screens/splash_screen.dart';
 import 'package:chiller_vendor/widgets/reset_password_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           primaryColor:  Colors.lightBlueAccent,
           fontFamily: 'Lato'
       ),
+      builder: EasyLoading.init(),
       initialRoute: SplashScreen.id,
       routes: {
         SplashScreen.id:(context)=>SplashScreen(),

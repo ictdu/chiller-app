@@ -67,7 +67,7 @@ class _CategoryListState extends State<CategoryList> {
                       ),
                       title: Text(document.data()['name']),
                       onTap: (){
-                        _provider.selectCategory(document.data()['name']);
+                        _provider.selectCategory(document.data()['name'], document.data()['image']);
                         Navigator.pop(context);
                       },
                     );
@@ -133,7 +133,7 @@ class _SubCategoryListState extends State<SubCategoryList> {
               }
               if(snapshot.connectionState == ConnectionState.done){
                 Map<String, dynamic>data = snapshot.data.data();
-                return Expanded(
+                return data != null ? Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -181,7 +181,7 @@ class _SubCategoryListState extends State<SubCategoryList> {
                       ),
                     ],
                   ),
-                );
+                ) : Text('No Category Selected');
               }
               return Center(
                 child: CircularProgressIndicator(),

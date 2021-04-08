@@ -27,10 +27,10 @@ class _RegisterFormState extends State<RegisterForm> {
   String shopName;
   bool _isLoading = false;
 
-  FirebaseStorage _storage = FirebaseStorage.instance;
-
   Future<String>uploadFile(filePath) async {
     File file = File(filePath);
+
+    FirebaseStorage _storage = FirebaseStorage.instance;
 
     try {
       await _storage.ref('uploads/shopProfilePic/${_nameTextController.text}').putFile(file);
