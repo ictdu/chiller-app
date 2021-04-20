@@ -112,7 +112,16 @@ class _AddNewProductState extends State<AddNewProduct> {
                                         lowStockQty: int.parse(_lowStockTextController.text),
                                       );
                                       setState(() {
+                                        //clear all the existing values after saving a product
                                         _formKey.currentState.reset();
+                                        _comparedPriceController.clear();
+                                        dropdownValue = null;
+                                        _subCategoryTextController.clear();
+                                        _categoryTextController.clear();
+                                        _brandTextController.clear();
+                                        _track = false;
+                                        _image = null;
+                                        _visible = false;
                                       });
                                     }else{
                                       //upload failed
