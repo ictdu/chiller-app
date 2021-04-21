@@ -27,9 +27,10 @@ class _MenuWidgetState extends State<MenuWidget> {
 
   Future<DocumentSnapshot>getVendorData()async{
     var result = await FirebaseFirestore.instance.collection('vendors').doc(user.uid).get();
-    setState(() {
-      vendorData = result;
-    });
+      setState(() {
+        vendorData = result;
+      });
+
     return result;
   }
 
