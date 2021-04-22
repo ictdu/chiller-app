@@ -185,7 +185,7 @@ class ProductProvider with ChangeNotifier{
       this.alertDialog(
         context: context,
         title: 'SAVE DATA',
-        content: 'Product details saved successfully',
+        content: 'Product details updated successfully',
       );
     }catch(e){
       this.alertDialog(

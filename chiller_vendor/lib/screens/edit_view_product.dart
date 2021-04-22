@@ -64,7 +64,8 @@ class _EditViewProductState extends State<EditViewProduct> {
           _weightTextController.text = document.data()['weight'];
           _priceTextController.text = document.data()['price'].toString();
           _comparedPriceTextController.text = document.data()['comparedPrice'].toString();
-          discount = (double.parse(_priceTextController.text)/double.parse(_comparedPriceTextController.text)*100);
+          var difference = double.parse(_comparedPriceTextController.text) - double.parse(_priceTextController.text);
+          discount = (difference / double.parse(_comparedPriceTextController.text) * 100);
           image = document.data()['productImage'];
           _descriptionTextController.text = document.data()['description'];
           _categoryTextController.text = document.data()['category']['mainCategory'];
@@ -176,7 +177,6 @@ class _EditViewProductState extends State<EditViewProduct> {
                       }
                     }
                     FocusScopeNode currentFocus = FocusScope.of(context);
-
                     if (!currentFocus.hasPrimaryFocus) {
                       currentFocus.unfocus();
                     }
@@ -553,7 +553,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 70,),
+                    SizedBox(height: 60,),
                   ],
                 ),
               )
