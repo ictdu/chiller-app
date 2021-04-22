@@ -205,7 +205,7 @@ class _EditViewProductState extends State<EditViewProduct> {
       body: doc == null ? Center(child: CircularProgressIndicator()) : Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.only(left: 10, right: 10),
           child: ListView(
             children: [
               AbsorbPointer(
@@ -217,7 +217,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 80,
+                          width: 150,
                           height: 30,
                           child: TextFormField(
                             controller: _brandTextController,
@@ -283,6 +283,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                           Container(
                             width: 100,
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.zero,
                                   border: InputBorder.none,
@@ -297,6 +298,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                           Container(
                             width: 100,
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.zero,
                                 border: InputBorder.none,
@@ -367,7 +369,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: Row(
                         children: [
                           Text('Category',
@@ -425,7 +427,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                     Visibility(
                       visible: _visible,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 20),
+                        padding: const EdgeInsets.only(bottom: 20),
                         child: Row(
                           children: [
                             Text('Sub Category',
@@ -502,58 +504,70 @@ class _EditViewProductState extends State<EditViewProduct> {
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text('Stock: '),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                border: InputBorder.none
-                            ),
-                            controller: _stockTextController,
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Low Stock: '),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                border: InputBorder.none
-                            ),
-                            controller: _lowStockTextController,
-                            style: TextStyle(
-                              color: Colors.grey,
+                    SizedBox(
+                      height: 25,
+                      child: Row(
+                        children: [
+                          Text('Stock: '),
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(bottom: 15),
+                                  border: InputBorder.none
+                              ),
+                              controller: _stockTextController,
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Text('Tax %: '),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                border: InputBorder.none
-                            ),
-                            controller: _taxTextController,
-                            style: TextStyle(
-                              color: Colors.grey,
+                    SizedBox(
+                      height: 25,
+                      child: Row(
+                        children: [
+                          Text('Low Stock: '),
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(bottom: 15),
+                                  border: InputBorder.none
+                              ),
+                              controller: _lowStockTextController,
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 60,),
+                    SizedBox(
+                      height: 25,
+                      child: Row(
+                        children: [
+                          Text('Tax %: '),
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(bottom: 15),
+                                  border: InputBorder.none
+                              ),
+                              controller: _taxTextController,
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 75,),
                   ],
                 ),
               )

@@ -41,7 +41,7 @@ class _ImageSliderState extends State<ImageSlider> {
           FutureBuilder(
           future: getSliderImageFromDb(),
             builder: (_, snapShot){
-            return snapShot.data == null ? Center(child: CircularProgressIndicator(),) : Padding(
+            return snapShot.data == null ? Center(child: SizedBox(height: 25, width: 25, child: CircularProgressIndicator()),) : Padding(
               padding: const EdgeInsets.only(top: 4),
               child: CarouselSlider.builder(
                   itemCount: snapShot.data.length,

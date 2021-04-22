@@ -28,26 +28,26 @@ class MainScreen extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: Image.asset('images/splashlogo.png'),
           title: ("Home"),
-          activeColor: Theme.of(context).primaryColor,
-          inactiveColor: CupertinoColors.systemGrey,
+          activeColorPrimary: Theme.of(context).primaryColor,
+          inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.square_favorites_alt),
           title: ("My Favourites"),
-          activeColor: Theme.of(context).primaryColor,
-          inactiveColor: CupertinoColors.systemGrey,
+          activeColorPrimary: Theme.of(context).primaryColor,
+          inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.bag),
           title: ("My Orders"),
-          activeColor: Theme.of(context).primaryColor,
-          inactiveColor: CupertinoColors.systemGrey,
+          activeColorPrimary: Theme.of(context).primaryColor,
+          inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.profile_circled),
           title: ("My Account"),
-          activeColor: Theme.of(context).primaryColor,
-          inactiveColor: CupertinoColors.systemGrey,
+          activeColorPrimary: Theme.of(context).primaryColor,
+          inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
       ];
     }

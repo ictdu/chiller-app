@@ -98,11 +98,13 @@ class _NearbyStoresState extends State<NearbyStores> {
               children: [
                 RefreshIndicator(
                   child: PaginateFirestore(
-                    bottomLoader: SizedBox(
-                      height: 30,
-                      width: 30,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                    bottomLoader: Center(
+                      child: SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                        ),
                       ),
                     ),
                     header: Column(

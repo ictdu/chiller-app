@@ -29,7 +29,7 @@ class _TopPickedStoreState extends State<TopPickedStore> {
       child: StreamBuilder<QuerySnapshot>(
         stream: _storeServices.getTopPickedStore(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot){
-          if(!snapShot.hasData)return CircularProgressIndicator();
+          if(!snapShot.hasData)return Center(child: SizedBox(height: 25, width: 25, child: CircularProgressIndicator()));
           //confirm if there are nearby store or none
           List shopDistance = [];
           for(int i=0 ; i<snapShot.data.docs.length-1; i++){
