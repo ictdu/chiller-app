@@ -83,7 +83,6 @@ class _EditViewProductState extends State<EditViewProduct> {
   @override
   Widget build(BuildContext context) {
     var _provider = Provider.of<ProductProvider>(context);
-    _provider.resetProvider();
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -175,6 +174,7 @@ class _EditViewProductState extends State<EditViewProduct> {
                         );
                         EasyLoading.dismiss();
                       }
+                      _provider.resetProvider();
                     }
                     FocusScopeNode currentFocus = FocusScope.of(context);
                     if (!currentFocus.hasPrimaryFocus) {
